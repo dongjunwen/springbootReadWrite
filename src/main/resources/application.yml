@@ -1,0 +1,63 @@
+## context-path代表项目名称 端口 以及超时时间
+server:
+  context-path: /dl
+  port: 8001
+  session:
+    timeout: 900
+## Spring配置:
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+## 序列化将时间默认序列化为该格式的时间；not_null如果有null默认过滤
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: NON_NULL
+
+##此处采用druid数据源 主从配置基本一样 master slave   数据库ip要区分
+druid:
+    type: com.alibaba.druid.pool.DruidDataSource
+    master:
+        url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root
+        password: root
+        initialSize: 5
+        minIdle: 1
+        #maxIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,log4j
+        useGlobalDataSourceStat: true
+    slave:
+        url: jdbc:mysql://localhost:3307/test?characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useUnicode=true
+        driver-class-name: com.mysql.jdbc.Driver
+        username: root
+        password: root
+        initialSize: 5
+        minIdle: 1
+        #maxIdle: 10
+        maxActive: 100
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT 1 FROM DUAL
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxPoolPreparedStatementPerConnectionSize: 20
+        filters: stat,wall,log4j
+        useGlobalDataSourceStat: true
+ ##指定mybatis的配置文件
+mybatis:
+    mapper-locations: classpath:mapping/*.xml
